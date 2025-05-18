@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Financiero</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1>Dashboard Financiero</h1>
+    
+    <!-- Server status indicator -->
+    <div id="server-status" class="server-status">
+      <span class="status-dot"></span>
+      <span class="status-text">Conectando al servidor...</span>
+    </div>
+
+    <!-- Error message -->
+    <div id="error-message" class="error-message hidden"></div>
+    
+    <div class="summary-cards">
+      <div class="card">
+        <h3>Ingresos Totales</h3>
+        <div class="card-value income" id="total-income">$0</div>
+      </div>
+      <div class="card">
+        <h3>Gastos Totales</h3>
+        <div class="card-value expenses" id="total-expense">$0</div>
+      </div>
+      <div class="card">
+        <h3>Balance Actual</h3>
+        <div class="card-value balance" id="total-balance">$0</div>
+      </div>
+      <div class="card">
+        <h3>Meta de Ahorro</h3>
+        <div class="card-value goal" id="savings-goal">$0</div>
+      </div>
+    </div>
+    
+
+    <div class="charts-row">
+      <div class="chart-container">
+        <h2>Distribución de Ingresos y Gastos</h2>
+        <canvas id="spendingChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <h2>Progreso de Ahorro</h2>
+        <canvas id="savingsChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="savings-goal-container">
+      <h2>Mi Meta de Ahorro</h2>
+      
+      <div class="form-group">
+        <label for="savings-goal-input">Establecer nueva meta:</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="number" id="savings-goal-input" placeholder="Ej: 10000">
+          <button id="update-goal-btn" class="edit-goal-btn">Actualizar Meta</button>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="add-to-savings">Agregar a ahorros (usará tu balance actual):</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="number" id="add-to-savings" placeholder="Ej: 500">
+          <button id="add-savings-btn" class="add-to-savings-btn">Agregar a Ahorros</button>
+        </div>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar">0%</div>
+      </div>
+      
+      <div class="goal-status" id="goal-status">
+        <p>Has ahorrado <strong>$<span id="current-savings">0</span></strong> de <strong>$<span id="goal-amount">0</span></strong></p>
+        <p>Faltan <strong>$<span id="remaining-amount">0</span></strong> para alcanzar tu meta</p>
+        <p id="savings-timeline"></p>
+      </div>
+    </div>
+    
+    <div class="transactions-row">
+      <div class="transaction-box">
+        <h2>Agregar Ingreso</h2>
+        <div class="form-group">
+          <label for="income-description">Descripción:</label>
+          <input type="text" id="income-description" placeholder="Ej: Salario">
+        </div>
+        <div class="form-group">
+          <label for="income-amount">Monto:</label>
+          <input type="number" id="income-amount" placeholder="Ej: 1500">
+        </div>
+        <button id="add-income-btn">Agregar Ingreso</button>
+        
+        <h3 style="margin-top: 20px;">Historial de Ingresos</h3>
+        <table id="income-table">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      
+      <div class="transaction-box">
+        <h2>Agregar Gasto</h2>
+        <div class="form-group">
+          <label for="expense-description">Descripción:</label>
+          <input type="text" id="expense-description" placeholder="Ej: Comida">
+        </div>
+        <div class="form-group">
+          <label for="expense-amount">Monto:</label>
+          <input type="number" id="expense-amount" placeholder="Ej: 200">
+        </div>
+        <button id="add-expense-btn">Agregar Gasto</button>
+        
+        <h3 style="margin-top: 20px;">Historial de Gastos</h3>
+        <table id="expense-table">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="charts.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
